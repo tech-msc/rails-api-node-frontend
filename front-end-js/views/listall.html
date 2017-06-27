@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>LIST ALL</title>
+  <link rel="stylesheet" href="public/styles/index.css">
+</head>
+
+<body>
+  <h2>List All Todo's</h2>
+  <div>
+    
+    {{#each result}}    
+    <p>
+      <strong>Id: </strong>{{id}}
+      <br>
+      <strong>Title: </strong>{{title}}
+      <br>
+      <strong>Completed: </strong>{{completed}}
+      <br>
+      <strong>Created at: </strong>{{created_at}}
+      <br>
+      <strong>Updated at: </strong>{{updated_at}}
+      <br>
+    <p>
+    {{/each}}
+
+  </div>
+  <div>
+    <button onclick="window.location.href='/index'">Return to Index</button>
+  </div>
+</body>
+
+</html>
