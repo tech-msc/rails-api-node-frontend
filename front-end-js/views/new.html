@@ -4,12 +4,15 @@
 <head>
   <meta charset="utf-8">
   <title>NEW</title>
-  <link rel="stylesheet" href="public/styles/index.css">
+  <link rel="stylesheet" href="/public/styles/index.css">
 </head>
 
 <body>
   <h2>New Todo</h2>
-  <div>
+  <div class="div-btn-navigation">    
+      <button onclick="window.location.href='/index'">Return to Index</button>
+  </div>
+  <div>    
     <form id="frm-new-todo" method="post" accept-charset="utf-8">
       <table>
         <tr>
@@ -34,48 +37,26 @@
             <input type="checkbox" id="iscompleted-id" name="iscompleted-name">
           </td>
         </tr>
-        <!-- <tr>
-          <td>
-            <input type="submit" value="Create" id="create-id">
-          </td>
-        </tr> -->
       </table>
-      <input type="submit" value="Create" id="sub-create-id" name=sub-create-name>
+      <input type="submit" value="Save" id="sub-save-id" name=sub-save-name>
     </form>
   </div>
-  <hr>
-  <!--  <script>
-      var todo = {}
+  
+  <br>
 
-      function handle(){
-        todo.title = document.getElementById('create-title-id').value
-        todo.completed = document.getElementById('iscompleted-id').checked
-
-        if (!todo.completed){
-          todo.completed = false
-        }
-
-        console.log(todo)
-      }
-
-      </script> -->
-
+  
   <div id="result_create">
-    
-      {{#ifResult result}}
-        <h3>Todo Created</h3>
-        <p>
-          <strong>Title: </strong>{{result.title}}
+    {{#ifResult result}}
+      <h3>Todo Created</h3>
+      <p>
+        <strong>Title: </strong>{{result.title}}
         <br>
         <strong>Completed: </strong>{{result.completed}}
-        <br>
-      {{/ifResult}}
-    <p>
+        <br> 
+      <p>
+    {{/ifResult}}
   </div>
-  <div>
-    <!-- <button onclick="window.location.href='/listall'">All Todo's</button> -->
-    <button onclick="window.location.href='/index'">Return to Index</button>
-  </div>
+  
 </body>
 
 </html>

@@ -6,19 +6,38 @@ const Wreck = require('wreck')
 
 // boom error handler if not exist errors, return REPLY
 var statusCodeBad = function (url, reply, view) {
-  Request.get(url, function (error, response, body) {
+  Wreck.get(url, function (error, response, body) {
     if (error) {
       throw error
     }
 
     if (response.statusCode >= 400) {
-      reply(Boom.notFound('Boom: Todo not found.'))
+      reply(Boom.notFound('Boom: Todo not found'))
     }
 
     const data = JSON.parse(body)
-    reply.view(view, { result: data })
+    reply.view(view, {
+      result: data
+    })
   })
 }
+
+// var statusCodeBad = function (url, reply, view) {
+//   Request.get(url, function (error, response, body) {
+//     if (error) {
+//       throw error
+//     }
+
+//     if (response.statusCode >= 400) {
+//       reply(Boom.notFound('Boom: Todo not found.'))
+//     }
+
+//     const data = JSON.parse(body)
+//     reply.view(view, {
+//       result: data
+//     })
+//   })
+// }
 
 module.exports = [
 
@@ -36,8 +55,6 @@ module.exports = [
     method: 'GET',
     path: '/',
     handler: function (req, reply) {
-      // reply.view('index')
-
       var url = 'http://mint:3000/todos'
       statusCodeBad(url, reply, 'index')
     }
@@ -47,8 +64,6 @@ module.exports = [
     method: 'GET',
     path: '/index',
     handler: function (req, reply) {
-      // reply.view('index')
-
       var url = 'http://mint:3000/todos'
       statusCodeBad(url, reply, 'index')
     }
@@ -62,16 +77,6 @@ module.exports = [
       var url = 'http://mint:3000/todos'
 
       statusCodeBad(url, reply, 'listall')
-        // Request.get('http://mint:3000/todos', function (error, response, body) {
-        //   if (error) {
-        //     throw error
-        //   }
-
-      //   const data = JSON.parse(body)
-      //   reply.view('listall', {
-      //     result: data
-      //   })
-      // })
     }
   },
 
@@ -86,7 +91,71 @@ module.exports = [
     method: 'POST',
     path: '/new',
     handler: function (req, reply) {
-      // console.log("REceived POST FROM " + req.payload['create-title-name']);
+      var todo = {}
+
+      var iscompleted = req.payload['iscompleted-name']
+
+      if (!iscompleted) {
+        iscompleted = false
+      }
+      if (iscompleted === 'on') {
+        iscompleted = true
+      }
+
+      todo.title = req.payload['create-title-name']
+      todo.completed = iscompleted
+
+      Wreck.post('http://mint:3000/todos', {
+          payload: {
+            title: todo.title,
+            completed: todo.completed
+          }
+        },
+        function (err, res, payload) {
+          if (err) {
+            throw err
+          }
+          // console.log('Wreck:' + res)
+          // console.log('Wreck:' + payload)
+        })
+
+      // reply.view('new', {
+      //   result: todo
+      // })
+      reply.view('new', {
+        result: todo
+      })
+    }
+  },
+
+  // EDIT
+  {
+    method: 'GET',
+    path: '/edit',
+    handler: function (req, reply) {
+      // console.log('Auau:' + req.payload)
+
+      reply.view('edit')
+    }
+  },
+  {
+    method: 'GET',
+    path: '/edit/{id}',
+    handler: function (req, reply) {
+      var url = 'http://mint:3000/todos/' + encodeURIComponent(req.params.id)
+
+      statusCodeBad(url, reply, 'edit')
+
+      // reply.view('edit')
+    }
+  },
+
+  // PUT/EDIT
+  {
+    method: 'POST',
+    path: '/edit/{id}',
+    handler: function (req, reply) {
+      var url = 'http://mint:3000/todos/' + encodeURIComponent(req.params.id)
 
       var todo = {}
 
@@ -97,36 +166,28 @@ module.exports = [
       }
       if (iscompleted === 'on') {
         iscompleted = true
-      }      
+      }
 
-      todo.title = req.payload['create-title-name']      
+      todo.title = req.payload['edit-title-name']
       todo.completed = iscompleted
 
-      Wreck.post("http://mint:3000/todos", 
-                  {payload: {title: todo.title, 
-                  completed: todo.completed}}, 
-                  function(err, res, payload) {
-                    if(err){
-                      throw err
-                    }
-                    console.log('Wreck:' + res)
-                    console.log('Wreck:' + payload)
-                  })
+      Wreck.put(url, {
+          payload: {
+            title: todo.title,
+            completed: todo.completed
+          }
+        },
+        function (err, res, payload) {
+          if (err) {
+            throw err
+          }
+          // console.log('Wreck Resp: ' + res)
+          // console.log('Wreck Payload: ' + payload)
+        })
 
-
-      reply.view('new', { result: todo })
-    }
-  },
-
-  // EDIT
-  {
-    method: 'GET',
-    path: '/edit',
-    handler: function (req, reply) {
-
-      // console.log(req.payload)
-
-      reply.view('edit')
+      reply.view('edit', {
+        resultEdited: todo
+      })
     }
   },
 
@@ -137,10 +198,10 @@ module.exports = [
     handler: function (req, reply) {
       const todoID = encodeURIComponent(req.params.id)
       var url = 'http://mint:3000/todos/' + todoID
+      
       console.log(url)
 
       statusCodeBad(url, reply, 'listone')
-
     }
   },
 
@@ -152,6 +213,5 @@ module.exports = [
       reply('find by title')
     }
   }
-
 
 ]

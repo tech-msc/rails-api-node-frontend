@@ -4,11 +4,15 @@
 <head>
   <meta charset="utf-8">
   <title>LIST ALL</title>
-  <link rel="stylesheet" href="public/styles/index.css">
+  <link rel="stylesheet" href="/public/styles/index.css">
 </head>
 
 <body>
   <h2>List All Todo's</h2>
+  <div class="div-btn-navigation">    
+    <button onclick="window.location.href='/index'">Return to Index</button>
+  </div>
+
   <div>
     
     {{#each result}}    
@@ -27,9 +31,7 @@
     {{/each}}
 
   </div>
-  <div>
-    <button onclick="window.location.href='/index'">Return to Index</button>
-  </div>
+  
 </body>
 
 </html>

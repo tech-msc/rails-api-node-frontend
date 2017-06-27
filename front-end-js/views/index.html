@@ -4,13 +4,20 @@
 <head>
   <meta charset="utf-8">
   <title>INDEX</title>
-  <link rel="stylesheet" href="public/styles/index.css">
+  <link rel="stylesheet" href="/public/styles/index.css">
 </head>
 
 <body>
   <h2>Todo's Index</h2>
-  <div>
+  
 
+  <div class="div-btn-navigation">    
+      <button onclick="window.location.href='/new'">New Todo
+      </button>
+    </div>
+
+
+  <div>
     <table class="table-data" id="table-data-index">
       <thead>
         <tr>
@@ -29,8 +36,12 @@
           <td>
             <table class="table-data-action">
               <tr>
-                <td id='result-edit-{{id}}'><a href="/edit">edit</a></td>                
-                <td id='result-delete-{{id}}'><a href="/delete">delete</a></td>
+                <td id='result-edit-{{id}}'>
+                  <a href="/edit/{{id}}" onclick="func({{id}});">edit</a>
+                </td>                
+                <td id='result-delete-{{id}}'>
+                  <a href="/delete">delete</a>
+                </td>
               </tr>
             </table>
           </td>
@@ -39,12 +50,8 @@
       </tbody>
     </table>
   </div>
-  <br>
-  <div>
-    <!-- <button onclick="window.location.href='/listall'">All Todo's</button> -->
-    <button onclick="window.location.href='/new'">New Todo
-    </button>
-  </div>
+  
+  
 </body>
 
 </html>
