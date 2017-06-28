@@ -4,25 +4,22 @@
 <head>
   <meta charset="utf-8">
   <title>EDIT</title>
-  <link rel="stylesheet" href="/public/styles/index.css">
-  <!--<link rel="stylesheet" href="/public/styles/index.css">  -->
+  <link rel="stylesheet" href="/public/styles/default.css">
 </head>
 
 <body>
   <h2> EDIT Todo</h2>
-  <!--{{json result}}
-  <hr>
-  IS TRUE:  {{#ifChecked result.completed}}
-            {{/ifChecked}}-->
+ 
   <div class="div-btn-navigation">
     <button onclick="window.location.href='/index'">Return to Index</button>
   </div>
+  
   <div>
     <form id="form-edit-todo" method="POST" accept-charset="utf-8">
       <style>
-      table tr td {
-        padding: 5px;
-      }
+        table tr td {
+          padding: 5px;
+        }
       </style>
       <table>
         <tr>
@@ -51,7 +48,9 @@
       <input type="submit" value="Save" id="sub-save-id" name="sub-save-name">
     </form>
   </div>
-  <br> 
+  
+  <br>
+  
 
   {{#ifResult resultEdited}}
   <div id="result_updated">
@@ -62,11 +61,12 @@
       <strong>Title: </strong>{{resultEdited.title}}
       <br>
       <strong>Completed: </strong>{{resultEdited.completed}}
-      <br>      
+      <br>
       <p>
   </div>
   {{/ifResult}}
-  </div>
+  
+
 </body>
 
 </html>

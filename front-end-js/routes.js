@@ -1,18 +1,14 @@
-const Request = require('request')
-const LodashFilter = require('lodash.filter')
-const LodashTake = require('lodash.take')
 const Boom = require('boom')
 const Wreck = require('wreck')
 
-// boom error handler if not exist errors, return REPLY
 var statusCodeBad = function (url, reply, view) {
   Wreck.get(url, function (error, response, body) {
     if (error) {
-      throw error
-    }
-
-    if (response.statusCode >= 400) {
+      // throw error
       reply(Boom.notFound('Boom: Todo not found'))
+    }
+    if (response.statusCode >= 400) {
+      reply(Boom.notFound('Boom: Todo not found :)'))
     }
 
     const data = JSON.parse(body)
@@ -22,10 +18,7 @@ var statusCodeBad = function (url, reply, view) {
   })
 }
 
-
-
 module.exports = [
-
 
   // INDEX WITH DATA
   {
@@ -83,11 +76,11 @@ module.exports = [
       todo.completed = iscompleted
 
       Wreck.post('http://mint:3000/todos', {
-          payload: {
-            title: todo.title,
-            completed: todo.completed
-          }
-        },
+        payload: {
+          title: todo.title,
+          completed: todo.completed
+        }
+      },
         function (err, res, payload) {
           if (err) {
             throw err
@@ -96,9 +89,6 @@ module.exports = [
           // console.log('Wreck:' + payload)
         })
 
-      // reply.view('new', {
-      //   result: todo
-      // })
       reply.view('new', {
         result: todo
       })
@@ -121,8 +111,6 @@ module.exports = [
       var url = 'http://mint:3000/todos/' + encodeURIComponent(req.params.id)
 
       statusCodeBad(url, reply, 'edit')
-
-      // reply.view('edit')
     }
   },
 
@@ -137,7 +125,6 @@ module.exports = [
       var todo = {}
 
       var iscompleted = req.payload['iscompleted-name']
-      
 
       if (!iscompleted) {
         iscompleted = false
@@ -151,11 +138,11 @@ module.exports = [
       todo.completed = iscompleted
 
       Wreck.put(url, {
-          payload: {
-            title: todo.title,
-            completed: todo.completed
-          }
-        },
+        payload: {
+          title: todo.title,
+          completed: todo.completed
+        }
+      },
         function (err, res, payload) {
           if (err) {
             throw err
@@ -184,22 +171,22 @@ module.exports = [
     }
   },
 
-  // DELETE 
+  // DELETE
   {
     method: 'GET',
     path: '/delete/{id}',
     handler: function (req, reply) {
       var todoID = encodeURIComponent(req.params.id)
 
-      var url = "http://mint:3000/todos/" + todoID
+      var url = 'http://mint:3000/todos/' + todoID
 
       var todoDeleted = {}
-      
+
       // GET DELETED ITEM - to feedback
       Wreck.get(url, function (err, res, body) {
-        if (err) {          
-            throw err
-          }
+        if (err) {
+          throw err
+        }
         todoDeleted = JSON.parse(body)
       })
 
@@ -208,10 +195,10 @@ module.exports = [
         if (error) {
           throw error
         }
-        reply.view('delete', { result: todoDeleted })
-
+        reply.view('delete', {
+          result: todoDeleted
+        })
       })
-
     }
   }
 

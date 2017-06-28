@@ -1,14 +1,7 @@
-'use strict'
-
 const Hapi = require('hapi')
-  // const Request = require('request')
 const Vision = require('vision')
 const Handlebars = require('handlebars')
-
 const Inert = require('inert')
-
-// const LodashFilter = require('lodash.filter')
-// const LodashTake = require('lodash.take')
 const routes = require('./routes')
 
 const server = new Hapi.Server()
@@ -35,55 +28,39 @@ server.register(Vision, (err) => {
 
 server.route(routes)
 
-// public content routes
-
 server.register(Inert, () => {})
-
-// server.route({
-// 	method: 'GET',
-// 	path: '/public/{param*}',
-// 	handler: {
-// 		directory:{
-// 			path: './public',
-//       redirectToSlash: true,
-//       listing: false,
-//       index: false
-// 		}
-// 	}
-// })
 
 server.route({
   method: 'GET',
-    path: '/public/{param*}',
-    handler: {
-      directory:{
-        path: './public',
-        redirectToSlash: true,
-        listing: false,
-        index: false
-      }
-	}
+  path: '/public/{param*}',
+  handler: {
+    directory: {
+      path: './public',
+      redirectToSlash: true,
+      listing: false,
+      index: false
+    }
+  }
 
 })
 
 // end public routes
 
-
 Handlebars.registerHelper('json', function (context) {
   return JSON.stringify(context)
 })
 
-Handlebars.registerHelper('ifResult', function(v1, options){
-  if (v1){
+Handlebars.registerHelper('ifResult', function (v1, options) {
+  if (v1) {
     return options.fn(this)
   }
 })
-Handlebars.registerHelper('ifChecked', function(v1){
-  if(v1 === 'on'){
-    return "checked"
+Handlebars.registerHelper('ifChecked', function (v1) {
+  if (v1 === 'on') {
+    return 'checked'
   }
-  if(v1 === true){
-    return "checked"
+  if (v1 === true) {
+    return 'checked'
   }
   // else{
   //   return ""

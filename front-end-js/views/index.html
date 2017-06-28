@@ -4,18 +4,16 @@
 <head>
   <meta charset="utf-8">
   <title>INDEX</title>
-  <link rel="stylesheet" href="/public/styles/index.css">
+  <link rel="stylesheet" href="/public/styles/default.css">
 </head>
 
 <body>
   <h2>Todo's Index</h2>
-  
 
-  <div class="div-btn-navigation">    
-      <button onclick="window.location.href='/new'">New Todo
+  <div class="div-btn-navigation">
+    <button onclick="window.location.href='/new'">New Todo
       </button>
-    </div>
-
+  </div>
 
   <div>
     <table class="table-data" id="table-data-index">
@@ -36,17 +34,16 @@
           <td id='result-title-{{id}}'>{{title}}</td>
           <td id='result-completed-{{id}}'>{{completed}}</td>
           <td id="result-createdat-{{id}}">
-          {{created_at}}</td>
+            {{created_at}}</td>
           <td id="result-updatedat-{{id}}">
-          {{updated_at}}</td>
-
+            {{updated_at}}</td>
 
           <td>
             <table class="table-data-action">
               <tr>
                 <td id='result-edit-{{id}}'>
                   <a href="/edit/{{id}}">edit</a>
-                </td>                
+                </td>
                 <td id='result-delete-{{id}}'>
                   <a href="/delete/{{id}}">delete</a>
                 </td>
@@ -58,8 +55,7 @@
       </tbody>
     </table>
   </div>
-  
-  
+
 </body>
 
 </html>
