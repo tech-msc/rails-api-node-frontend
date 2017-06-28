@@ -22,33 +22,10 @@ var statusCodeBad = function (url, reply, view) {
   })
 }
 
-// var statusCodeBad = function (url, reply, view) {
-//   Request.get(url, function (error, response, body) {
-//     if (error) {
-//       throw error
-//     }
 
-//     if (response.statusCode >= 400) {
-//       reply(Boom.notFound('Boom: Todo not found.'))
-//     }
-
-//     const data = JSON.parse(body)
-//     reply.view(view, {
-//       result: data
-//     })
-//   })
-// }
 
 module.exports = [
 
-  // INDEX WITHOUT DATA
-  // {
-  //   method: 'GET',
-  //   path: '/',
-  //   handler: function (req, reply) {
-  //     reply.view('index')
-  //   }
-  // },
 
   // INDEX WITH DATA
   {
@@ -80,7 +57,7 @@ module.exports = [
     }
   },
 
-  // CREATE
+  // NEW
   {
     method: 'GET',
     path: '/new',
@@ -137,8 +114,7 @@ module.exports = [
 
       reply.view('edit')
     }
-  },
-  {
+  }, {
     method: 'GET',
     path: '/edit/{id}',
     handler: function (req, reply) {
@@ -155,11 +131,13 @@ module.exports = [
     method: 'POST',
     path: '/edit/{id}',
     handler: function (req, reply) {
-      var url = 'http://mint:3000/todos/' + encodeURIComponent(req.params.id)
+      var todoID = encodeURIComponent(req.params.id)
+      var url = 'http://mint:3000/todos/' + todoID
 
       var todo = {}
 
       var iscompleted = req.payload['iscompleted-name']
+      
 
       if (!iscompleted) {
         iscompleted = false
@@ -168,6 +146,7 @@ module.exports = [
         iscompleted = true
       }
 
+      todo.id = todoID
       todo.title = req.payload['edit-title-name']
       todo.completed = iscompleted
 
@@ -198,19 +177,41 @@ module.exports = [
     handler: function (req, reply) {
       const todoID = encodeURIComponent(req.params.id)
       var url = 'http://mint:3000/todos/' + todoID
-      
+
       console.log(url)
 
       statusCodeBad(url, reply, 'listone')
     }
   },
 
-  // FIND BY TITLE
+  // DELETE 
   {
     method: 'GET',
-    path: '/todos/title/',
+    path: '/delete/{id}',
     handler: function (req, reply) {
-      reply('find by title')
+      var todoID = encodeURIComponent(req.params.id)
+
+      var url = "http://mint:3000/todos/" + todoID
+
+      var todoDeleted = {}
+      
+      // GET DELETED ITEM - to feedback
+      Wreck.get(url, function (err, res, body) {
+        if (err) {          
+            throw err
+          }
+        todoDeleted = JSON.parse(body)
+      })
+
+      // DELETE ITEM
+      Wreck.delete(url, function (error, res, payload) {
+        if (error) {
+          throw error
+        }
+        reply.view('delete', { result: todoDeleted })
+
+      })
+
     }
   }
 

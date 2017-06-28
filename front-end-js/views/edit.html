@@ -4,35 +4,31 @@
 <head>
   <meta charset="utf-8">
   <title>EDIT</title>
-  <link rel="stylesheet" href="/public/styles/index.css">  
+  <link rel="stylesheet" href="/public/styles/index.css">
   <!--<link rel="stylesheet" href="/public/styles/index.css">  -->
 </head>
 
 <body>
   <h2> EDIT Todo</h2>
-
   <!--{{json result}}
   <hr>
   IS TRUE:  {{#ifChecked result.completed}}
             {{/ifChecked}}-->
-    <div class="div-btn-navigation">
-      <button onclick="window.location.href='/index'">Return to Index</button>      
-    </div>
-
-  
-
+  <div class="div-btn-navigation">
+    <button onclick="window.location.href='/index'">Return to Index</button>
+  </div>
   <div>
     <form id="form-edit-todo" method="POST" accept-charset="utf-8">
       <style>
-        table tr td{
-          padding: 5px;
-        }
+      table tr td {
+        padding: 5px;
+      }
       </style>
       <table>
         <tr>
           <td>
             <label for="edit-title-id">Title
-          </label>
+            </label>
           </td>
         </tr>
         <tr>
@@ -43,38 +39,33 @@
         <tr>
           <td>
             <label for="iscompleted-id">Completed
-          </label>
+            </label>
           </td>
         </tr>
         <tr>
           <td>
-            <input type="checkbox" id="iscompleted-id" name="iscompleted-name" {{#ifChecked result.completed}}{{/ifChecked}}
-            >
+            <input type="checkbox" id="iscompleted-id" name="iscompleted-name" {{#ifChecked result.completed}}{{/ifChecked}}>
           </td>
         </tr>
       </table>
       <input type="submit" value="Save" id="sub-save-id" name="sub-save-name">
     </form>
   </div>
+  <br> 
 
-
-    <br>
-
-
-
-    <div id="result_updated">
-      {{#ifResult resultEdited}}
-        <h3>Todo Created</h3>
-        <p>
-          <strong>Title: </strong>{{resultEdited.title}}
-          <br>
-          <strong>Completed: </strong>{{resultEdited.completed}}
-          <br> 
-        <p>
-      {{/ifResult}}
-    </div>
-
-    
+  {{#ifResult resultEdited}}
+  <div id="result_updated">
+    <h3>Todo Updated</h3>
+    <p>
+      <strong>Id: </strong>{{resultEdited.id}}
+      <br>
+      <strong>Title: </strong>{{resultEdited.title}}
+      <br>
+      <strong>Completed: </strong>{{resultEdited.completed}}
+      <br>      
+      <p>
+  </div>
+  {{/ifResult}}
   </div>
 </body>
 

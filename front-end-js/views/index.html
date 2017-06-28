@@ -24,6 +24,8 @@
           <th>Id</th>
           <th>Title</th>
           <th>Is completed</th>
+          <th>Created At</th>
+          <th>Updated At</th>
           <th colspan="2">Actions</th>
         </tr>
       </thead>
@@ -33,14 +35,20 @@
           <td id='result-id-{{id}}'>{{id}}</td>
           <td id='result-title-{{id}}'>{{title}}</td>
           <td id='result-completed-{{id}}'>{{completed}}</td>
+          <td id="result-createdat-{{id}}">
+          {{created_at}}</td>
+          <td id="result-updatedat-{{id}}">
+          {{updated_at}}</td>
+
+
           <td>
             <table class="table-data-action">
               <tr>
                 <td id='result-edit-{{id}}'>
-                  <a href="/edit/{{id}}" onclick="func({{id}});">edit</a>
+                  <a href="/edit/{{id}}">edit</a>
                 </td>                
                 <td id='result-delete-{{id}}'>
-                  <a href="/delete">delete</a>
+                  <a href="/delete/{{id}}">delete</a>
                 </td>
               </tr>
             </table>
